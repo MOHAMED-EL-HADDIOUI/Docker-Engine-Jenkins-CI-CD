@@ -8,6 +8,7 @@ pipeline {
   stages {
     stage('Cloning Git') {
       steps {
+
         git 'https://github.com/MOHAMED-EL-HADDIOUI/Docker-Engine-Jenkins-CI-CD.git'
       }
     }
