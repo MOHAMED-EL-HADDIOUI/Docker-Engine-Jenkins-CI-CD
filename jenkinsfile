@@ -1,17 +1,17 @@
 pipeline {
   environment {
     registry = "mohamedelhaddioui/devopstp4"
-        registryCredential = 'dockerhub'
-        dockerImage = ''
-        username = "mohamedelhaddioui99@gmail.com"
-        password = "MOHAMED@elhaddioui99"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+    username = "mohamedelhaddioui99@gmail.com"
+    password = "MOHAMED@elhaddioui99"
   }
   agent any
 
   stages {
     stage('Cloning Git') {
       steps {
-        git 'https://github.com/MOHAMED-EL-HADDIOUI/Docker-Engine-Jenkins-CI-CD.git'
+        git branch: 'main', url: 'https://github.com/MOHAMED-EL-HADDIOUI/Docker-Engine-Jenkins-CI-CD'
       }
     }
 
@@ -22,8 +22,7 @@ pipeline {
         }
       }
     }
-
-    stage('Test image') {
+   stage('Test image') {
       steps {
         script {
           echo "Tests passed"
@@ -34,7 +33,9 @@ pipeline {
     stage('Publish Image') {
       steps {
         script {
-          docker.withRegistry('', registryCredential) {
+          credentialsId = '6bc04e89-d314-4dcc-8c2f-f2aa02b0036a'
+
+          docker.withRegistry('https://registry.hub.docker.com', credentialsId) {
             dockerImage.push()
           }
         }
